@@ -5,6 +5,7 @@ import { Observable } from "rxjs";
 import { of } from "rxjs";
 
 import { Log } from "../models/log";
+import { JsonPipe } from '@angular/common';
 
 @Injectable({
   providedIn: "root"
@@ -45,7 +46,17 @@ export class LogService {
   }
 
   getLogs(): Observable<Log[]> {
-    return of(this.logs);
+    // return of(this.logs);
+
+    if(localStorage.getItem("logs") === null){
+      this.logs = []
+    }else{
+      this.logs = JSON.parse(localStorage.getItem('logs'))
+    }
+
+    return of(this.logs.sort((a,b)=>{
+      return b.date - a.date
+    }))
   }
 
   setFormLog(log: Log) {
@@ -54,6 +65,8 @@ export class LogService {
 
   addLog(log: Log) {
     this.logs.unshift(log);
+
+    localStorage.setItem("logs", JSON.stringify(this.logs))
   }
 
   updLog(log: Log) {
@@ -63,6 +76,8 @@ export class LogService {
       }
     });
     this.logs.unshift(log);
+
+    localStorage.setItem("logs", JSON.stringify(this.logs))
   }
 
   deleteLog(log: Log) {
@@ -71,6 +86,8 @@ export class LogService {
         this.logs.splice(i, 1);
       }
     });
+
+    localStorage.setItem("logs", JSON.stringify(this.logs))
   }
 
   clearState(){
