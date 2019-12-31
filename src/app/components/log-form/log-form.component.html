@@ -4,6 +4,6 @@
             <input type="text" class="form-control" name="text" [(ngModel)]="text" placeholder="Add a log..">
         </div>
         <input type="submit" value="Add Log" class="btn btn-dark bg-secondary" style="color: rgb(0, 0, 0);" [disabled]="!this.text">
-        <button type="button" class="btn btn-dark bg-danger" [hidden]="!this.text">Clear</button>
+        <button (click)="clearState()" type="button" class="btn btn-dark bg-danger" [hidden]="!this.text">Clear</button>
     </form>
 </div>

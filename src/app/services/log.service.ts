@@ -18,24 +18,30 @@ export class LogService {
   });
   selectedLog = this.logSource.asObservable();
 
+  private stateSource = new BehaviorSubject<boolean>(true)
+  stateClear = this.stateSource.asObservable();
+
   constructor() {
-    this.logs = [
-      {
-        id: "1",
-        text: "Generated Components",
-        date: new Date("12/28/2019 12:54:31")
-      },
-      {
-        id: "2",
-        text: "Added Bootstrap",
-        date: new Date("12/27/2019 10:52:31")
-      },
-      {
-        id: "3",
-        text: "Added Font Awesome",
-        date: new Date("12/29/2019 11:14:27")
-      }
-    ];
+    // this.logs = [
+    //   {
+    //     id: "1",
+    //     text: "Generated Components",
+    //     date: new Date("12/28/2019 12:54:31")
+    //   },
+    //   {
+    //     id: "2",
+    //     text: "Added Bootstrap",
+    //     date: new Date("12/27/2019 10:52:31")
+    //   },
+    //   {
+    //     id: "3",
+    //     text: "Added Font Awesome",
+    //     date: new Date("12/29/2019 11:14:27")
+    //   }
+    // ];
+
+    this.logs = []
+    
   }
 
   getLogs(): Observable<Log[]> {
@@ -65,5 +71,9 @@ export class LogService {
         this.logs.splice(i, 1);
       }
     });
+  }
+
+  clearState(){
+    this.stateSource.next(true)
   }
 }
